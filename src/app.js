@@ -21,7 +21,7 @@ window.addEventListener('load', () => {
 
     sketch = new Sketch(container, pane);
     sketch.oninit = () => {
-        sketch.animate(); 
+        sketch.run(); 
     }
 });
 
@@ -32,7 +32,7 @@ window.addEventListener('resize', () => {
 
         resizeTimeoutId = setTimeout(() => {
             resizeTimeoutId = null;
-            sketch.updateSize();
+            sketch.resize();
         }, 300);
     }
 });

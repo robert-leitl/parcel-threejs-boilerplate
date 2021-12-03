@@ -32,7 +32,7 @@ export class Sketch {
         });
     }
 
-    updateSize() {
+    resize() {
         this.renderer.setSize(
             this.container.offsetWidth,
             this.container.offsetHeight
@@ -44,16 +44,16 @@ export class Sketch {
         this.camera.updateProjectionMatrix();
     }
 
-    animate() {
+    run() {
         if (this.#isDestroyed) return;
 
         this.controls.update();
-        this.render();
+        this.#render();
 
-        requestAnimationFrame(() => this.animate());
+        requestAnimationFrame(() => this.run());
     }
 
-    render() {
+    #render() {
         this.shaderMaterial.uniforms.uTime.value += 0.05;
         this.renderer.render(this.scene, this.camera);
     }
@@ -77,7 +77,7 @@ export class Sketch {
 
         this.container.appendChild(this.renderer.domElement);
 
-        this.updateSize();
+        this.resize();
 
         this.controls = new OrbitControls(
             this.camera,
@@ -89,6 +89,8 @@ export class Sketch {
             this.shaderMaterial.uniforms.uMouse.value.x = e.pageX;
             this.shaderMaterial.uniforms.uMouse.value.y = e.pageY;
         };
+
+        this.#initTweakpane();
 
         if (this.oninit) this.oninit();
     }
